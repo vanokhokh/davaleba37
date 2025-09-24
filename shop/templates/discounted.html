@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <h1>there is discounted products</h1>
+  <ol>
+    {% for disc in discount %}
+      <li> <a href="{% url 'shop:product' product_pk=disc.pk %}">{{disc.title}}</a> </li>
+    {% endfor %}
+  </ol>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <a href="{% url 'shop:home' %}">home page</a>
+    <h1>{{product_id.title}}</h1>
+    <p>description: {{product_id.description}}</p>
+    <p>price: {{product_id.price}}</p>
+    <p>discount: {{product_id.discount}}</p>
+</body>
+</html>

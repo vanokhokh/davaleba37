@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <h1>Category page</h1>
+  <a href="{% url 'shop:home' %}">home page</a>
+  <h2>there is all "{{category_id}}" products</h2>
+  <ol>
+    {% for product in all_product %}
+      <li><a href="{% url 'shop:product' product_pk=product.pk %}">{{product.title}}</a></li>
+      <li>price: {{product.price}}</li>
+      <li>discount: {{product.discount}}</li> <br>
+    {% endfor %}
+  </ol>
+</body>
+</html>
