@@ -2,6 +2,7 @@
 {% block title %} products {% endblock %}
 
 {% block body %}
+<h1>there is all product</h1>
 <a class="btn btn-success mt-4" href="{% url 'shop:add_product' %}">Add Product</a>
 <div class="row">
   {% for product in all_products %}
