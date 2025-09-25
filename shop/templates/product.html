@@ -1,14 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <a href="{% url 'shop:home' %}">home page</a>
-    <h1>{{product_id.title}}</h1>
-    <p>description: {{product_id.description}}</p>
-    <p>price: {{product_id.price}}</p>
-    <p>discount: {{product_id.discount}}</p>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title %}product page{% endblock %}
+
+{% block body %}
+        <div class="card" style="width: 18rem;">
+            <h5 class="card-title m-auto pt-3">{{product_id.title}}</h5>
+          <img src="..." class="card-img-top" alt="...">
+          <div class="card-body m-auto">
+            <p class="card-text">description: {{product_id.description}}</p>
+            <p>price: {{product_id.price}}</p>
+              <p>discount: {{product_id.discount}}</p>
+            <a href="#" class="btn btn-primary">click to by</a>
+          </div>
+        </div>
+
+{% endblock %}
+

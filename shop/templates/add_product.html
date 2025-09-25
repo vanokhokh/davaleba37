@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %} add page {% endblock %}
+
+{% block body %}
+    <form method="post">
+        {% csrf_token %}
+        {{form}}
+        <button class="btn btn-success" type="submit">add</button>
+    </form>
+{% endblock %}

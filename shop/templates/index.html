@@ -1,17 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1>Home Page</h1>
-    <h2>there is all category</h2>
-    <ol>
+{% extends 'base.html' %}
+{% block title %} Home page {% endblock %}
+
+{% block body %}
+    <h1>this is all category</h1>
+    <ol class="mt-3">
         {% for cat in all_category %}
             <li><a href="{% url 'shop:specific_categories' category_pk=cat.pk %}">{{ cat.name }}</a> (There are {{cat.total_products}} products here). </li> <br>
         {% endfor %}
     </ol>
-    <a href="{% url 'shop:discounted_product' %}">here is dicounted products</a>
-</body>
-</html>
+{% endblock %}
+

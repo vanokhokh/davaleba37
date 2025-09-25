@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %} products {% endblock %}
+
+{% block body %}
+<a class="btn btn-success mt-4" href="{% url 'shop:add_product' %}">Add Product</a>
+<div class="row">
+  {% for product in all_products %}
+      <div class="col-md-4 mt-3">
+        <div class="card" style="width: 18rem;">
+          <h5 class="card-title m-auto">{{product.title}}</h5>
+          <img src="..." class="card-img-top" alt="...">
+          <div class="card-body">
+            <p>price: {{product.price}}, discount: {{product.discount}}</p>
+            <p class="card-text">category: {{product.category}}</p>
+            <a href="{% url 'shop:product' product_pk=product.pk %}" class="btn btn-primary">click to see product detail</a>
+          </div>
+        </div>
+      </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
+</body>
+</html>
