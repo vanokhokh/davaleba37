@@ -7,6 +7,13 @@
         {% for cat in all_category %}
             <li><a href="{% url 'shop:specific_categories' category_pk=cat.pk %}">{{ cat.name }}</a> (There are {{cat.total_products}} products here). </li> <br>
         {% endfor %}
-    </ol>
+    </ol><br>
+
+    <h2>this is list of last 5 added product </h2>
+    <ul>
+        {% for product in last_5_product %}
+            <li><a href="{% url 'shop:product' product_pk=product.pk %}">{{product.title}}</a></li>
+        {% endfor %}
+    </ul>
 {% endblock %}
 

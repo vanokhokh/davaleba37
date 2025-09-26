@@ -9,7 +9,14 @@
             <p class="card-text">description: {{product_id.description}}</p>
             <p>price: {{product_id.price}}</p>
               <p>discount: {{product_id.discount}}</p>
+              <p>created time: {{product_id.created}}</p>
+              <p>updated time: {{product_id.updated_at}}</p>
             <a href="#" class="btn btn-primary">click to by</a>
+              <a href="{% url 'shop:update_product' product_id=product_id.pk %}" class="btn btn-success mt-3">update this product</a>
+              <form action="{% url 'shop:delete_product' product_id=product_id.pk %}" method="post" onsubmit="return confirm('you want to delete this product?')>
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-danger mt-2">delete</button>
+              </form>
           </div>
         </div>
 
