@@ -2,55 +2,70 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Count
 from shop.models import Category, Product
 from shop.forms import ProductForm
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 
-def index(request):
-    all_category = Category.objects.annotate(total_products=Count('products'))
-    return render(request, 'index.html', {'all_category':all_category})
 
-def specific_categories(request, category_pk):
-    category_id = get_object_or_404(Category, pk=category_pk)
-    all_product = Product.objects.filter(category=category_id).select_related('category')
-    return render(request, 'specific_categories.html', {'category_id':category_id , 'all_product':all_product})
+class IndexView(ListView):
+    model = Category
+    template_name = 'index.html'
+    context_object_name = 'category'
+    queryset = Category.objects.annotate(total_products=Count('products'))
 
-def product(request, product_pk):
-    product_id = get_object_or_404(Product, pk=product_pk)
-    return render(request, 'product.html', {'product_id':product_id})
 
-def discounted_product(request):
-    discount = Product.objects.filter(discount=True)
-    return render(request, 'discounted.html', {'discount':discount})
+class CategoryDetailView(ListView):
+    model = Product
+    template_name = 'specific_categories.html'
+    context_object_name = 'all_products'
 
-def all_products(request):
-    all_prod = Product.objects.all().select_related('category').order_by('-id')
-    return render(request, 'all_product.html', {'all_products':all_prod})
+    def get_queryset(self):
+        self.category = get_object_or_404(Category, pk=self.kwargs['category_pk'])
+        return Product.objects.filter(category=self.category).select_related('category')
 
-def add_product(request):
-    if request.method == "POST":
-        form = ProductForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('shop:all_products')
-    else:
-        form = ProductForm()
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category'] = self.category
+        return context
 
-    return render(request, 'add_product.html', {'form':form})
+class ProductListView(ListView):
+    model = Product
+    queryset = Product.objects.all().select_related('category')
+    template_name = 'all_product.html'
+    context_object_name = 'all_products'
+    ordering = ['price']
 
-def update_product(request, product_id):
-    product = get_object_or_404(Product, pk=product_id)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['count'] = self.queryset.count()
+        return context
 
-    if request.method == "POST":
-        form = ProductForm(request.POST, instance=product)
-        if form.is_valid():
-            form.save()
-            return redirect('shop:product', product_pk=product.pk)
-    else:
-        form = ProductForm(instance=product)
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'product.html'
+    pk_url_kwarg = 'product_pk'
 
-    return render(request, 'update_product.html', {'form':form, 'product':product})
+class DiscountedProductListView(ListView):
+    model = Product
+    template_name = 'discounted.html'
+    context_object_name = 'discounted_products'
+    queryset = Product.objects.filter(discount=True)
 
-def delete_product(request, product_id):
-    product = get_object_or_404(Product, pk=product_id)
-    if request.method == "POST":
-        product.delete()
-        return redirect('shop:all_products')
-    return redirect('shop:all_products')
+class CreateProductView(CreateView):
+    model = Product
+    form_class = ProductForm
+    template_name = 'add_product.html'
+    success_url = '/all_products/'
+
+class UpdateProductView(UpdateView):
+    model = Product
+    form_class = ProductForm
+    template_name = 'update_product.html'
+    pk_url_kwarg = 'product_pk'
+
+    def get_success_url(self):
+        return reverse_lazy('shop:product' , kwargs={'product_pk':self.object.pk})
+
+class DeleteProductView(DeleteView):
+    model = Product
+    pk_url_kwarg = 'product_pk'
+    success_url = '/all_products/'

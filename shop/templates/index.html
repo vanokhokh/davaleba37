@@ -4,8 +4,8 @@
 {% block body %}
     <h1>this is all category</h1>
     <ol class="mt-3">
-        {% for cat in all_category %}
-            <li><a href="{% url 'shop:specific_categories' category_pk=cat.pk %}">{{ cat.name }}</a> (There are {{cat.total_products}} products here). </li> <br>
+        {% for cat in category %}
+            <li><a href="{% url 'shop:specific_categories' category_pk=cat.pk %}">{{ cat.name }}</a> (There is {{cat.total_products}} products here). </li>
         {% endfor %}
     </ol><br>
 

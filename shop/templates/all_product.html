@@ -2,7 +2,7 @@
 {% block title %} products {% endblock %}
 
 {% block body %}
-<h1>there is all product</h1>
+<h1>there is all product (total product: {{count}})</h1>
 <a class="btn btn-success mt-4" href="{% url 'shop:add_product' %}">Add Product</a>
 <div class="row">
   {% for product in all_products %}
@@ -14,8 +14,8 @@
             <p>price: {{product.price}}, discount: {{product.discount}}</p>
             <p class="card-text">category: {{product.category}}</p>
             <a href="{% url 'shop:product' product_pk=product.pk %}" class="btn btn-primary">click to see product detail</a>
-            <a class="btn btn-success mt-1" href="{% url 'shop:update_product' product_id=product.id %}">update Product</a>
-            <form action="{% url 'shop:delete_product' product_id=product.pk %}" method="post" onsubmit="return confirm('you want to delete this product?')">
+            <a class="btn btn-success mt-1" href="{% url 'shop:update_product' product_pk=product.id %}">update Product</a>
+            <form action="{% url 'shop:delete_product' product_pk=product.pk %}" method="post" onsubmit="return confirm('you want to delete this product?')">
               {% csrf_token %}
               <button type="submit" class="btn btn-danger mt-1">delete</button>
             </form>
