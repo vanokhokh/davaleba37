@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %} {{user}} profile {% endblock %}
+{% load crispy_forms_filters %}
+
+{% block body %}
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <form method="POST">
+        <h2>user form</h2>
+        {% csrf_token %}
+        {{ user_form|crispy }} <br>
+        <h2>profile form</h2>
+        {{ profile_form|crispy }}
+        <button class="btn btn-primary" type="submit">Update</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

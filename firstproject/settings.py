@@ -47,13 +47,14 @@ INSTALLED_APPS = [
 
     #applications
     'shop',
+    'user',
 
     # my installed
     'debug_toolbar',
     'crispy_forms',
     'crispy_bootstrap5',
 ]
-# for crispy install settings
+# for crispy settings
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
@@ -148,3 +149,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+LOGIN_URL = '/user/login/'
+LOGIN_REDIRECT_URL = '/user/profile/'

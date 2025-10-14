@@ -27,6 +27,22 @@
                 <li>
                     <a class="nav-link" href="{% url 'shop:add_product' %}">add product</a>
                 </li>
+                  {% if user.is_authenticated %}
+                      <li>
+                        <a class="nav-link" href="{% url 'user:profile' %}">{{user}}</a>
+                    </li>
+                    <form action="{% url 'user:logout' %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Logout</button>
+                    </form>
+                   {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link " href="{% url 'user:login' %}">login</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{% url 'user:register' %}">register</a>
+                    </li>
+                  {% endif %}
               </ul>
               <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>

@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
-{% block title %} add page {% endblock %}
+{% block title %} Login {% endblock %}
 {% load crispy_forms_filters %}
 
 {% block body %}
     <form method="post" class="mt-4">
         {% csrf_token %}
         {{form|crispy}}
-        <button class="btn btn-success" type="submit">add product</button>
+        <button class="btn btn-success" type="submit">Login</button>
     </form>
 {% endblock %}
