@@ -2,18 +2,23 @@
 {% block title %} categories {% endblock %}
 
 {% block body %}
-    <h2>there is all "{{category}}" products</h2>
-    {% for products in all_products %}
-        <div class="card" style="width: 18rem;">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">{{products.title}}</h5>
-            <p>price: {{products.price}}</p>
-            <p>discount: {{products.discount}}</p>
-            <a href="{% url 'shop:product' product_pk=products.pk %}" class="btn btn-primary">click to see product detail</a>
-          </div>
-        </div>
-    {% endfor %}
-
+<div class="row">
+    <h2 class="text-center mt-2 mb-4">All Products from "{{category}}"</h2>
+    <div class="col-10 d-flex ">
+        {% for products in all_products %}
+            <div class="card m-1" style="width: 18rem;">
+                {% if products.image %}
+                    <img src="{{ products.image.url }}" class="card-img-top" alt="...">
+                {% endif %}
+              <div class="card-body">
+                <h5 class="card-title">{{products.title}}</h5>
+                <p>price: {{products.price}}</p>
+                <p>discount: {{products.discount}}</p>
+                <a href="{% url 'shop:product' product_pk=products.pk %}" class="btn btn-primary">click to see product detail</a>
+              </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
 

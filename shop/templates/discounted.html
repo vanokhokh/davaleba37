@@ -2,11 +2,14 @@
 {% block title %} discount {% endblock %}
 
 {% block body %}
-  <h1 class="">there is discounted products</h1>
+    <h1 class="text-center mt-4 mb-2">All Discounted Product</h1>
+    <div class="row mt-5 mb-5 d-flex discountdiv">
     {% for disc in discounted_products %}
-    <div class="card" style="width: 18rem;">
+        <div class="card m-1" style="width: 18rem;">
           <h5 class="card-title m-auto pt-3">{{disc.title}}</h5>
-          <img src="..." class="card-img-top" alt="...">
+            {% if disc.image %}
+                <img src="{{ disc.image.url }}" class="card-img-top mt-2" alt="...">
+            {% endif %}
           <div class="card-body m-auto">
             <p class="card-text">description: {{disc.description}}</p>
             <p>price: {{disc.price}}</p>
@@ -15,5 +18,6 @@
           </div>
         </div>
     {% endfor %}
-
+        <hr>
+    </div>
 {% endblock %}

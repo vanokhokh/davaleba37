@@ -2,16 +2,20 @@
 {% block title %} products {% endblock %}
 
 {% block body %}
-<h1>there is all product (total product: {{count}})</h1>
-<a class="btn btn-success mt-4" href="{% url 'shop:add_product' %}">Add Product</a>
+<h1 class="text-center">All Products <br> (total product: {{count}})</h1>
+<div class="text-center">
+  <a class="btn btn-success mt-4 mb-2" href="{% url 'shop:add_product' %}">Add Product</a>
+</div>
 <div class="row">
-  {% for product in all_products %}
-      <div class="col-md-4 mt-3">
-        <div class="card" style="width: 18rem;">
-          <h5 class="card-title m-auto">{{product.title}}</h5>
-          <img src="..." class="card-img-top" alt="...">
+  <div class="col-10 d-flex">
+      {% for product in all_products %}
+        <div class="card m-1" style="width: 18rem;">
+        <h5 class="card-title m-auto mt-2 mb-2">{{product.title}}</h5>
+          {% if product.image %}
+            <img src="{{ product.image.url }}" class="card-img-top" alt="...">
+          {% endif %}
           <div class="card-body">
-            <p>price: {{product.price}}, discount: {{product.discount}}</p>
+            <p>price: {{product.price}} <br> discount: {{product.discount}}</p>
             <p class="card-text">category: {{product.category}}</p>
             <a href="{% url 'shop:product' product_pk=product.pk %}" class="btn btn-primary">click to see product detail</a>
             <a class="btn btn-success mt-1" href="{% url 'shop:update_product' product_pk=product.id %}">update Product</a>
@@ -21,8 +25,15 @@
             </form>
           </div>
         </div>
-      </div>
-  {% endfor %}
+    {% endfor %}
+  </div>
+  <div class="col-2 text-center">
+    <form action="{% url 'shop:all_products' %}">
+      <input type="number" class="form-control" name="min_price" placeholder="minimal price" value="{{ request.GET.min_price }}">
+      <input type="number" class="form-control mt-2" name="max_price" placeholder="maximum price" value="{{ request.GET.max_price }}">
+      <button type="submit" class="btn btn-success mt-2">filter</button>
+    </form>
+  </div>
 </div>
 
 {% endblock %}
